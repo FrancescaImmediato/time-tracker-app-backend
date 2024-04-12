@@ -1,12 +1,12 @@
+//Used perplexity.ai to code this page
 import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
 
-@Controller()
+@Controller('api/hello-world')
 export class AppController {
-  constructor(private readonly appService: AppService) {}
-
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  getHelloWorld(): string {
+    return 'Hello world';
   }
 }
+
+//reminder to self: npm run start:dev
