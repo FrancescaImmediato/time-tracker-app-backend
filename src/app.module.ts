@@ -2,18 +2,20 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import {User} from './user/entities/user.entity'
+import { User } from './user/entities/user.entity';
 import { UserModule } from './user/user.module';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require('dotEnv').config();
 // reminder to create dotenv
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: '127.0.0.1',
+      host: process.env.DB_HOST,
       port: 3306,
-      username: '',
-      password: '',
-      database: 'timetrackerappdata1',
+      username: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
       entities: [User],
       synchronize: false,
     }),
@@ -23,5 +25,3 @@ import { UserModule } from './user/user.module';
   providers: [AppService],
 })
 export class AppModule {}
-
-
