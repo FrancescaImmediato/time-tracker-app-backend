@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {User} from './user/entities/user.entity'
 import { UserModule } from './user/user.module';
-
+// reminder to create dotenv
 @Module({
   imports: [
     TypeOrmModule.forRoot({
