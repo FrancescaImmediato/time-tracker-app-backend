@@ -1,26 +1,21 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+
+interface User {
+  email: string;
+  password: string;
+}
 
 @Injectable()
-export class UserService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
-  }
+export class UsersService {
+  private users: User[] = [];
 
-  findAll() {
-    return `This action returns all user`;
-  }
+  async createUser(email: string, password: string): Promise<void> {
+    const existingUser = this.users.find((user) => user.email === email);
+    if (existingUser) {
+      throw new Error('User account with email already exists.');
+    }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
-
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+    const newUser: User = { email, password };
+    this.users.push(newUser);
   }
 }

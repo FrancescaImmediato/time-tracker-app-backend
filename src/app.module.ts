@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user/entities/user.entity';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
+import { AppService } from './app.service';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotEnv').config();
 // reminder to create dotenv
@@ -20,6 +21,7 @@ require('dotEnv').config();
       synchronize: false,
     }),
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
