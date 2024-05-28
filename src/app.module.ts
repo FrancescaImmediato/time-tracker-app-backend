@@ -5,6 +5,7 @@ import { User } from './user/entities/user.entity';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { AppService } from './app.service';
+import { ProjectsModule } from './projects/projects.module';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotEnv').config();
 // reminder to create dotenv
@@ -22,6 +23,7 @@ require('dotEnv').config();
     }),
     UserModule,
     AuthModule,
+    ProjectsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
