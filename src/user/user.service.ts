@@ -1,26 +1,59 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { hash, compare } from 'bcrypt';
+import { User } from '../user/entities/user.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import * as moment from 'moment';
+
+interface UserInterface {
+  id?: string;
+  email: string;
+  password: string;
+}
 
 @Injectable()
-export class UserService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+export class UsersService {
+  // private users: UserInterface[] = [];
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>){
+  };
+
+  async createUser(email: string, password: string): Promise<UserInterface> {
+    const existingUser = await this.findByEmail(email);
+    if (existingUser) {
+      throw new Error('User account with email already exists.');
+    }
+
+    const hashedPassword = await hash(password, 10);
+    const newUser = {
+      email,
+      password: hashedPassword,
+    };
+
+    await this.userRepository.save({
+      email,
+      hashedPassword,
+      firstName: '',
+      lastName: '',
+    });
+    return newUser;
   }
 
-  findAll() {
-    return `This action returns all user`;
+  async findByEmail(email: string): Promise<User | undefined> {
+    return await this.userRepository.findOne({ where: { email: email } });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async validatePassword(
+    email: string,
+    password: string,
+  ): Promise<User | null> {
+    const user = await this.findByEmail(email);
+    if (user && (await compare(password, user.hashedPassword))) {
+      return user;
+    }
+    return null;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
-  }
+  
 }
