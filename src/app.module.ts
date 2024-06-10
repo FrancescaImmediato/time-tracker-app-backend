@@ -5,9 +5,6 @@ import { User } from './user/entities/user.entity';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { AppService } from './app.service';
-import { ProjectsModule } from './projects/projects.module';
-import { TimeEntriesModule } from './time-entries/time-entries.module';
-import { UsersModule } from './usersPage/usersPage.module';
 import { UsersPageService } from './users-page/users-page.service';
 import { UsersPageModule } from './users-page/users-page.module';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -27,9 +24,6 @@ require('dotEnv').config();
     }),
     UserModule,
     AuthModule,
-    ProjectsModule,
-    TimeEntriesModule,
-    UsersModule,
     UsersPageModule,
   ],
   controllers: [AppController],

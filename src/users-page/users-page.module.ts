@@ -3,7 +3,7 @@ import { UsersPageService } from './users-page.service';
 import { UsersPageController } from './users-page.controller';
 
 @Module({
+  controllers: [UsersPageController],
   providers: [UsersPageService],
-  controllers: [UsersPageController]
 })
 export class UsersPageModule {}
